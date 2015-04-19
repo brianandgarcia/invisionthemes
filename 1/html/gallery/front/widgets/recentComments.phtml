@@ -1,0 +1,22 @@
+<ips:template parameters="$comments" />
+{{if !empty( $comments ) }}
+	<h3 class='ipsType_reset ipsWidget_title'>{lang="block_recentComments"}</h3>
+	<div class='ipsPad_half ipsWidget_inner'>
+		<ul class='ipsDataList ipsDataList_reducedSpacing'>
+			{{foreach $comments as $comment}}
+				<li class='ipsDataItem'>
+					<div class='ipsDataItem_generic ipsDataItem_size1'>
+						{template="thumbImage" group="global" app="core" params="$comment->item()->thumb_file_name, $comment->item()->caption, 'tiny'"}
+					</div>
+					<div class='ipsDataItem_main'>
+						<a href="{$comment->url()}" title='{lang="view_this_image" sprintf="$comment->item()->caption"}'>{wordbreak="$comment->item()->caption"}</a><br>
+						<span class='ipsType_light ipsType_medium'>{lang="byline_nodate" htmlsprintf="$comment->author()->link()"}</span><br>
+						<div class='ipsType_richText ipsType_medium' data-ipsTruncate data-ipsTruncate-type="remove" data-ipsTruncate-size="2 lines">
+							{$comment->mapped('content')|raw}
+						</div>
+					</div>
+				</li>
+			{{endforeach}}
+		</ul>
+	</div>
+{{endif}}

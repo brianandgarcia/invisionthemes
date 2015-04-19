@@ -1,0 +1,65 @@
+<ips:template parameters="$form, $category, $canCreateAlbums=FALSE, $imageLimit=NULL" />
+
+<div class='ipsColumns ipsColumns_collapsePhone ipsSpacer_bottom ipsSpacer_double cGallerySubmit_stepBlock {{if $canCreateAlbums && \IPS\Member::loggedIn()->group['g_img_album_limit']}}cGalerySubmit_stepBlock_noMargin{{endif}}'>
+	<div class='ipsColumn ipsColumn_veryNarrow'>
+		<span class='cGallerySubmit_step'>1</span>
+	</div>
+	<div class='ipsColumn ipsColumn_fluid'>
+		<h1 class='ipsType_pageTitle'>{{if isset( $form->elements['']['movies'] )}}{lang="add_gallery_image_movies"}{{else}}{lang="add_gallery_image"}{{endif}}</h1>
+		<p class='ipsType_normal ipsType_reset'>
+			{{if $imageLimit !== NULL}}
+				{lang="add_gallery_album_limit" pluralize="\IPS\Member::loggedIn()->group['g_img_album_limit']"}
+			{{elseif $canCreateAlbums && \IPS\Member::loggedIn()->group['g_img_album_limit']}}
+				{lang="add_gallery_image_limit" pluralize="\IPS\Member::loggedIn()->group['g_img_album_limit']"}
+			{{else}}
+				{lang="add_gallery_image_desc"}
+			{{endif}}
+		</p>
+	</div>
+</div>
+
+{{if $form->error}}
+	<div class="ipsMessage ipsMessage_error ipsSpacer_bottom">
+		{$form->error}
+	</div>
+{{endif}}
+
+
+
+<form accept-charset='utf-8' method="post" action="{$form->action}" id='elGallerySubmit' enctype="multipart/form-data" data-ipsForm data-controller='gallery.front.submit.main'>
+	<input type="hidden" name="{$form->id}_submitted" value="1">
+	{{foreach $form->hiddenValues as $k => $v}}
+		<input type="hidden" name="{$k}" value="{$v}">
+	{{endforeach}}
+
+	<h3 class='ipsType_sectionTitle ipsType_reset'>{lang="select_your_images"}</h3>
+	<div class='ipsAreaBackground ipsPad ipsBox ipsBox_transparent ipsClearfix'>
+		<div id='elGallerySubmit_uploader' class='ipsClear'>
+			{$form->elements['']['images']->html( $form )|raw}
+			{{if $form->elements['']['images']->error}}
+				<br>
+				<span class="ipsType_warning">{lang="$form->elements['']['images']->error"}</span>
+			{{endif}}
+			<button type='button' class='ipsButton ipsButton_veryLight ipsButton_verySmall ipsHide' data-action='uploadMore'>{lang="upload_more_images"}</button>
+		</div>
+	</div>
+	{{if isset( $form->elements['']['movies'] )}}
+		<p class='ipsType_center ipsType_large'>{lang="or"}</p>
+		<h3 class='ipsType_sectionTitle ipsType_reset'>{lang="select_your_movies"}</h3>
+		<div class='ipsAreaBackground ipsPad ipsBox ipsBox_transparent ipsClearfix'>
+			<div id='elGallerySubmit_uploader' class='ipsClear'>
+				{$form->elements['']['movies']->html( $form )|raw}
+				{{if $form->elements['']['movies']->error}}
+					<br>
+					<span class="ipsType_warning">{lang="$form->elements['']['movies']->error"}</span>
+				{{endif}}
+				<button type='button' class='ipsButton ipsButton_veryLight ipsButton_verySmall ipsHide' data-action='uploadMore'>{lang="upload_more_movies"}</button>
+			</div>
+		</div>
+	{{endif}}
+
+	<hr class='ipsHr'>
+	<div class='ipsType_right'>
+		<button type='submit' class='ipsButton ipsButton_large ipsButton_primary' data-role='submitForm'>{lang="continue"}</button>
+	</div>
+</form>

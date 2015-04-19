@@ -1,0 +1,21 @@
+<ips:template parameters="$image, $orientation='vertical'" />
+<li class='cGalleryWidget {{if $orientation == 'horizontal'}}ipsCarousel_item{{endif}}'>
+	<div class='ipsType_center'>
+		<a href='{$image->url()}' title='{lang="view_this_image" sprintf="$image->caption"}'>
+			{{if $image->medium_file_name}}
+				<img src='{$image->medium_file_name}' alt='' class='ipsImage'>
+			{{else}}
+				<div class='ipsImage ipsNoThumb ipsNoThumb_video'>&nbsp;</div>
+			{{endif}}
+		</a>
+	</div>
+	<div>
+		{{if $image->directContainer()->allow_comments}}
+			<div class="ipsCommentCount ipsPos_right {{if $image->comments === 0}}ipsFaded{{endif}}" data-ipsTooltip title='{lang="num_comments" pluralize="$image->comments"}'>
+				{$image->comments}
+			</div>
+		{{endif}}
+		{{if $image->unread()}}<span class="ipsItemStatus ipsItemStatus_small"><i class="fa fa-circle"></i></span> <strong>{{endif}}<a href="{$image->url()}" title='{lang="view_this_image" sprintf="$image->caption"}' class='ipsType_break'>{wordbreak="$image->caption"}</a>{{if $image->unread()}}</strong>{{endif}}<br>
+		<span class='ipsType_light ipsType_small'>{lang="byline_nodate" htmlsprintf="$image->author()->link()"} &middot; {datetime="$image->mapped('date')" norelative="true"}</span><br>
+	</div>
+</li>

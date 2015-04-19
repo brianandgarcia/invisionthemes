@@ -1,0 +1,38 @@
+<ips:template parameters="$category, $albums, $uploadedCount" />
+
+{{if count( $albums )}}
+	<ul class='ipsDataList' data-controller='gallery.front.submit.existingAlbums'>
+		{{foreach $albums as $album}}
+			<li class='ipsDataItem'>
+				<div class='ipsDataItem_generic ipsDataItem_size3'>
+					<div style='background-image: url( {$album->coverPhoto( 'small' )} );' class='cGallerySubmit_albumImage cGalleryTrimmedImage {{if \IPS\Member::loggedIn()->group['g_img_album_limit'] && $album->count_imgs >= \IPS\Member::loggedIn()->group['g_img_album_limit']}}ipsFaded{{endif}}'>
+						<img src='{$album->coverPhoto( 'small' )}' alt='{$album->_title}'>
+					</div>
+				</div>
+				<div class='ipsDataItem_main'>
+					<h3 class='ipsDataItem_title ipsType_large {{if \IPS\Member::loggedIn()->group['g_img_album_limit'] && $album->count_imgs >= \IPS\Member::loggedIn()->group['g_img_album_limit']}}ipsFaded{{endif}}'>{$album->_title} {{if $album->last_img_date}}<span class='ipsType_light ipsType_unbold ipsType_medium ipsType_reset'>({lang="updated"} {datetime="$album->last_img_date"})</span>{{endif}}</h3>
+					<ul class='ipsList_inline ipsType_medium ipsType_light {{if \IPS\Member::loggedIn()->group['g_img_album_limit'] && $album->count_imgs >= \IPS\Member::loggedIn()->group['g_img_album_limit']}}ipsFaded{{endif}}'>
+						<li><i class='fa fa-camera'></i> {lang="num_images" pluralize="$album->count_imgs"}</li>
+						{{if $album->allow_comments}}
+							<li><i class='fa fa-comment'></i> {lang="num_comments" pluralize="$album->count_comments"}</li>
+						{{endif}}
+					</ul>
+					{{if \IPS\Member::loggedIn()->group['g_img_album_limit'] && $album->count_imgs >= \IPS\Member::loggedIn()->group['g_img_album_limit']}}
+						<p class='ipsType_normal ipsType_reset'><i class='fa fa-info-circle'></i> {lang="album_full_desc"}</p>
+					{{elseif \IPS\Member::loggedIn()->group['g_img_album_limit'] && ( \IPS\Member::loggedIn()->group['g_img_album_limit'] - $album->count_imgs ) < $uploadedCount}}
+						<p class='ipsType_normal ipsType_reset'>
+							<strong><i class='fa fa-info-circle'></i> {lang="x_more_images_album" pluralize="( \IPS\Member::loggedIn()->group['g_img_album_limit'] - $album->count_imgs )"}</strong>
+						</p>
+					{{endif}}
+				</div>
+				<div class='ipsDataItem_generic ipsDataItem_size2 ipsType_right'>
+					{{if !(\IPS\Member::loggedIn()->group['g_img_album_limit'] && $album->count_imgs >= \IPS\Member::loggedIn()->group['g_img_album_limit'])}}
+						<a href='{url="app=gallery&module=gallery&controller=submit&do=submit&_step=album&chooseAlbum=1&category={$category->id}&albumLocation=existing&album={$album->_id}"}' data-action='chooseAlbum' class='ipsButton ipsButton_primary ipsButton_small'>{lang="choose_album"}</a>
+					{{else}}
+						<em class='ipsType_noBreak ipsType_light'><i class='fa fa-times'></i> {lang="album_full"}</em>
+					{{endif}}
+				</div>
+			</li>
+		{{endforeach}}
+	</ul>
+{{endif}}

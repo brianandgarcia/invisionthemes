@@ -1,0 +1,11 @@
+<ips:template parameters="$table, $headers, $rows, $quickSearch" />
+
+{{if count( $rows )}}
+	<ul class='ipsList_inline cNexusCards ipsSpacer_top ipsType_center'>
+		{template="$table->rowsTemplate[1]" params="$table, $headers, $rows" object="$table->rowsTemplate[0]"}
+	</ul>
+{{else}}
+	<p class='ipsType_light ipsType_large'>
+		...
+	</p>
+{{endif}}

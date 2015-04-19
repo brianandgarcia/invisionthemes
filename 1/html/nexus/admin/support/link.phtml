@@ -1,0 +1,10 @@
+<ips:template parameters="$request, $tracking, $filter, $sort, $icon=FALSE" />
+{{if $icon}}<i class="fa fa-life-ring"></i> {{endif}}
+<a href="{$request->acpUrl()->setQueryString( array( 'filter' => $filter, 'sort' => $sort ) )}"><strong>{$request->title}</strong></a> <span class='ipsType_light ipsType_medium'>#{$request->id}</span>
+
+{{if $tracking}}
+	&nbsp;&nbsp;
+	<span class='ipsType_light ipsType_medium ipsType_noBreak'>
+		<i class="fa fa-check" data-ipsTooltip title="{lang="tracking"}"></i> {lang="tracking"}
+	</span>
+{{endif}}

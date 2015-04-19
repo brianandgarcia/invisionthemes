@@ -1,0 +1,35 @@
+<ips:template parameters="$activity, $type='activity'" />
+
+{{if $activity instanceof \IPS\calendar\Event\Comment or $activity instanceof \IPS\calendar\Event\Review}}
+	{{$item = $activity->item();}}
+{{else}}
+	{{$item = $activity;}}
+{{endif}}
+
+{{if $activity instanceof \IPS\blog\Entry\Comment}}
+	{{if mb_strlen( trim( strip_tags( $activity->truncated() ) ) ) }}
+		<div class='cSearchActivity_info ipsContained'>
+			<div class='ipsType_medium ipsType_richText ipsContained ipsSpacer_bottom' data-ipsTruncate data-ipsTruncate-size='3 lines' data-ipsTruncate-type='remove'>
+				{$activity->truncated()|raw}
+			</div>
+			{{if $type != 'search'}}
+				<ul class='ipsList_inline ipsType_light'>
+					<li>{template="reputationMini" group="global" app="core" params="$activity, '', NULL, TRUE"}</li>
+				</ul>
+			{{endif}}
+		</div>
+	{{endif}}
+{{else}}
+	<div class='cSearchActivity_info ipsContained'>
+		{{if $type != 'search'}}<a href='{$activity->url()}' class='ipsType_normal ipsType_break'>{$item->mapped('title')}</a>{{endif}}
+		<div class='ipsType_medium ipsType_richText ipsContained ipsSpacer_both ipsSpacer_half' data-ipsTruncate data-ipsTruncate-size='3 lines' data-ipsTruncate-type='remove'>
+			{$item->truncated()|raw}
+		</div>
+		<ul class='ipsList_inline ipsType_light'>
+			<li>{lang="num_comments" pluralize="$item->count_comments"}</li>
+			{{if $type != 'search' and $item instanceof \IPS\Content\Reputation and settings.reputation_enabled}}
+				<li>{template="reputationMini" group="global" app="core" params="$item, '', NULL, TRUE"}</li>
+			{{endif}}
+		</ul>
+	</div>
+{{endif}}

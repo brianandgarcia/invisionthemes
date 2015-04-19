@@ -1,0 +1,86 @@
+<ips:template parameters="$images=array(), $movies=array(), $form, $category, $currentIndex=0, $currentType='images', $currentItem, $album=NULL, $canCreate" />
+
+<div class='ipsColumns ipsColumns_collapsePhone cGallerySubmit_stepBlock ipsSpacer_bottom ipsSpacer_double'>
+	<div class='ipsColumn ipsColumn_veryNarrow'>
+		<span class='cGallerySubmit_step'>2</span>
+	</div>
+	<div class='ipsColumn ipsColumn_fluid'>
+		<h1 class='ipsType_pageTitle'>{lang="add_information"}</h1>
+		<p class='ipsType_normal ipsType_reset'>
+			{{if $canCreate && !$album}}
+				{lang="add_information_plus_album_desc"}
+			{{else}}
+				{lang="add_information_desc"}
+			{{endif}}
+		</p>
+	</div>
+</div>
+
+<div data-controller='gallery.front.submit.main' class='cGallerySubmit'>
+	<a id='elImageInfo'></a>
+	<div class='ipsBox'>
+		<h2 class='ipsType_sectionTitle ipsType_reset'>{{if count($movies) AND count($images)}}{lang="media_you_uploaded"}{{elseif count($movies)}}{lang="movies_you_uploaded"}{{else}}{lang="images_you_uploaded"}{{endif}}</h2>
+		<div class='ipsAreaBackground ipsPad_half cGallerySubmitStrip'>
+			<div class='ipsCarousel ipsClearfix' data-ipsCarousel data-role='uploadedImages'>
+				<ul class='cDownloadsCarousel' data-role="carouselItems">
+					{{foreach $images as $idx => $image}}
+						<li class="ipsCarousel_item {{if $image->done}}cGallerySubmit_done{{endif}} {{if $currentType == 'images' && $currentIndex == $idx}}cGallerySubmit_current{{endif}} {{if $album && \IPS\Member::loggedIn()->group['g_img_album_limit'] && ( $idx + 1 ) > \IPS\Member::loggedIn()->group['g_img_album_limit']}}cGallerySubmit_excess{{endif}}" data-type='images' data-index='{$idx}'>
+							<div style="background-image: url( {$image->url} );" class="cGalleryTrimmedImage">
+								<a href="{url="app=gallery&module=gallery&controller=submit&do=submit&type=images&edit={$idx}&_step=image_information&category={$category->_id}" seoTemplate="gallery_submit"}">
+									<img src="{$image->url}" alt=''>
+								</a>
+							</div>
+						</li>
+					{{endforeach}}
+					{{foreach $movies as $idx => $image}}
+						<li class="ipsCarousel_item {{if $currentType == 'movies' && $currentIndex == $idx}}cGallerySubmit_current{{endif}} {{if $album && \IPS\Member::loggedIn()->group['g_img_album_limit'] && ( count( $images ) + $idx + 1 ) > \IPS\Member::loggedIn()->group['g_img_album_limit']}}cGallerySubmit_excess{{endif}}" data-type='movies' data-index='{$idx}'>
+							<div {{if $image->attachmentThumbnailUrl}}style="background-image: url( {$image->attachmentThumbnailUrl} );"{{endif}} class="cGalleryTrimmedImage cGalleryMovieThumb ipsNoThumb ipsNoThumb_video">
+								<a href="{url="app=gallery&module=gallery&controller=submit&do=submit&type=images&edit={$idx}&_step=image_information&category={$category->_id}" seoTemplate="gallery_submit"}">
+									{{if $image->attachmentThumbnailUrl}}
+										<img src="{$image->attachmentThumbnailUrl}" alt=''>
+									{{else}}
+										&nbsp;
+									{{endif}}
+								</a>
+							</div>
+						</li>
+					{{endforeach}}
+				</ul>
+				<span class='ipsCarousel_shadow ipsCarousel_shadowLeft'></span>
+				<span class='ipsCarousel_shadow ipsCarousel_shadowRight'></span>
+				<a href='#' class='ipsCarousel_nav ipsHide' data-action='prev'><i class='fa fa-chevron-left'></i></a>
+				<a href='#' class='ipsCarousel_nav ipsHide' data-action='next'><i class='fa fa-chevron-right'></i></a>
+			</div>
+		</div>
+		<div class='ipsAreaBackground_reset ipsPad ipsClearfix'>
+			<a href='{url="app=gallery&module=gallery&controller=submit&do=submit&category={$category->_id}&_step=image_information&finish=1" seoTemplate="gallery_submit"}' class='ipsPos_right ipsButton ipsButton_important ipsButton_verySmall' data-action='finish'><i class='fa fa-check'></i> {lang="image_info_finish"}</a>
+			{{if $category->allow_albums AND ( $canCreate or count( \IPS\gallery\Album::loadByOwner() ) )}}
+				<div data-role='albumChoice' class='ipsPos_left {{if $album}}ipsHide{{endif}}'>
+					{{if $canCreate}}
+						<a href='{url="app=gallery&module=gallery&controller=submit&do=submit&_step=album&chooseAlbum=true&albumLocation=new&category={$category->_id}"}' data-action='createAlbum' data-ipsDialog data-ipsDialog-remoteSubmit data-ipsDialog-forceReload data-ipsDialog-title='{lang="create_album"}' class='ipsButton ipsButton_light ipsButton_verySmall'><i class='fa fa-plus'></i> {lang="create_an_album"}</a> {{if count( \IPS\gallery\Album::loadByOwner() )}}&nbsp;&nbsp;{lang="or"}&nbsp;&nbsp; {{endif}}
+					{{endif}}
+					{{if count( \IPS\gallery\Album::loadByOwner() )}}
+						<a href='{url="app=gallery&module=gallery&controller=submit&do=submit&_step=album&chooseAlbum=true&albumLocation=existing&category={$category->_id}"}' data-ipsDialog data-ipsDialog-title='{lang="choose_existing_album"}' data-ipsDialog-forceReload class='ipsButton ipsButton_light ipsButton_verySmall'><i class='fa fa-picture-o'></i> {lang="add_to_existing_album"}</a>
+					{{endif}}
+				</div>
+				<div data-role='albumChosen' class='ipsPos_left {{if !$album}}ipsHide{{endif}} ipsType_break'>
+					<i class='fa fa-picture-o'></i> &nbsp;<span data-role='text'>{lang="new_album" pluralize="$album['images']" sprintf="$album['name']"}</span> <a href='{url="app=gallery&module=gallery&controller=submit&do=submit&category={$category->_id}&_step=album" seoTemplate="gallery_submit"}' data-action='changeAlbum' class='ipsType_small'>({lang="change_album"})</a>
+				</div>
+			{{else}}
+				<div class='ipsPos_left'>
+					<i class='fa fa-picture-o'></i> {lang="adding_to_category_x" sprintf="$category->_title"}
+				</div>
+			{{endif}}
+
+			<ul class='ipsMenu ipsMenu_auto ipsHide' id='elImageTools_menu'>
+				<li class='ipsMenu_item'><a href='#'>{lang="set_tags"}</a></li>
+				<li class='ipsMenu_item'><a href='#'>{lang="set_copyright"}</a></li>
+				<li class='ipsMenu_item'><a href='#'>{lang="notify_me"}</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<section class='ipsColumns ipsColumns_collapsePhone ipsSpacer_top' data-role='editForm'>
+		{$form|raw}
+	</section>
+</div>

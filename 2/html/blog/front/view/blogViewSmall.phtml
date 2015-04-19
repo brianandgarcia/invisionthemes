@@ -1,0 +1,33 @@
+<ips:template parameters="$entry, $table" />
+
+<li class='cBlogView_entry'>
+	<div class='ipsPhotoPanel ipsPhotoPanel_tiny ipsPhotoPanel_notPhone'>
+		{template="userPhoto" app="core" params="$entry->author(), 'tiny'" group="global"}
+		<div>
+			{{if $entry->prefix()}}
+				{template="prefix" group="global" app="core" params="$entry->prefix( TRUE ), $entry->prefix()"}
+			{{endif}}
+			<a href="{$entry->url()}" title="{lang="read_more_about" sprintf="$entry->name"}" class='ipsType_large ipsType_blendLinks'>
+				{{if $entry->unread()}}
+					<span class='ipsItemStatus' data-ipsTooltip title="{lang="unread_blog"}"><i class="fa fa-circle"></i></span>
+				{{endif}}
+				{wordbreak="$entry->name"}
+			</a><br>
+			<p class='ipsType_light ipsType_reset'>
+				{lang="byline" htmlsprintf="$entry->author()->link()"}{datetime="$entry->date"}
+			</p>
+			
+			<ul class='ipsList_inline'>
+				{{if $table->canModerate()}}
+					<li class='ipsPos_left'>
+						{{$idField = $entry::$databaseColumnId;}}
+						<input type='checkbox' data-role='moderation' name="moderate[{$entry->$idField}]" data-actions="{expression="implode( ' ', $table->multimodActions( $entry ) )"}" data-state='{{if $entry->tableStates()}}{$entry->tableStates()}{{endif}}'>
+					</li>
+				{{endif}}
+				<li>
+					<a href='{$entry->url()}#comments' title='{lang="view_comments"}'><i class='fa fa-comment'></i> {lang="num_comments" pluralize="$entry->num_comments"}</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</li>

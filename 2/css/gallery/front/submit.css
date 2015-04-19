@@ -1,0 +1,121 @@
+#elGallerySubmit_uploader .ipsAttachment_dropZone {
+	background: #fff;
+	border: 3px dashed rgba(0,0,0,0.1);
+}
+
+.cGallerySubmit [data-role='albumChosen'] {
+	padding: 5px 0;
+	font-size: 14px;
+}
+
+.cGallerySubmit [data-role="editForm"] .ipsNoThumb {
+	width: 100%;
+}
+
+.cGallerySubmitStrip .ipsCarousel_item {
+	position: relative;
+}
+
+.cGallerySubmitStrip .cGalleryTrimmedImage a, .cGallerySubmitStrip .cGalleryMovieThumb {
+	width: 90px;
+	height: 90px;
+	display: block;
+}
+
+.cGallerySubmitStrip .ipsCarousel_item:not( .cGallerySubmit_current ) {
+	border: 5px solid transparent;
+}
+
+html[dir="ltr"] .cGallerySubmitStrip .ipsCarousel:not( [data-ipsCarousel-fullSizeItems] ) .ipsCarousel_item {
+	margin-right: 5px;
+}
+html[dir="rtl"] .cGallerySubmitStrip .ipsCarousel:not( [data-ipsCarousel-fullSizeItems] ) .ipsCarousel_item {
+	margin-left: 5px;
+}
+
+.cGallerySubmit_current {
+	border: 5px solid #5490c0;
+}
+
+.cGallerySubmit_done > div {
+	opacity: 0.6;
+}
+
+.cGallerySubmit_done:after {
+	display: block;
+	content: "\f00c";
+	font-family: "FontAwesome";
+	border: 1px solid rgba(255,255,255,0.6);
+	text-align: center;
+	line-height: 20px;
+	width: 20px;
+	height: 20px;
+	border-radius: 20px;
+	color: #fff;
+	position: absolute;
+	bottom: 5px;
+	box-shadow: 0px 1px 0px rgba(0,0,0,0.6);
+	background: #36a546;	
+}
+html[dir="ltr"] .cGallerySubmit_done:after {
+	right: 5px;
+}
+html[dir="rtl"] .cGallerySubmit_done:after {
+	left: 5px;
+}
+
+.cGallerySubmit_excess > div {
+	opacity: 0.4;
+}
+
+.cGallerySubmit_excess:before {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	line-height: 90px;
+	text-align: center;
+	font-size: 60px;
+	content: "\f00d";
+	font-family: 'FontAwesome';
+	color: #333;
+	opacity: 0.7;
+}
+
+.cGallerySubmit_stepBlock .ipsType_pageTitle,
+.cGallerySubmit_stepBlock p {
+	margin: 0 0 0 10px;
+}
+html[dir="rtl"] .cGallerySubmit_stepBlock .ipsType_pageTitle,
+html[dir="rtl"] .cGallerySubmit_stepBlock p {
+	margin: 0 10px 0 0;
+}
+
+.cGallerySubmit_step {
+	display: block;
+	width: 50px;
+	height: 50px;
+	text-align: center;
+	line-height: 50px;
+	font-size: 26px;
+	color: #fff;
+	border-radius: 50px;
+	background: {theme="step_background"};
+}
+html[dir="ltr"] .cGallerySubmit_step {
+	margin-right: 10px;
+}
+html[dir="rtl"] .cGallerySubmit_step {
+	margin-left: 10px;
+}
+
+.cGallerySubmit_albumImage {
+	width: 75px;
+	height: 75px;
+}
+
+.cGallerySubmit_finished {
+	width: 400px;
+	margin: 0 auto;
+}

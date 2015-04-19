@@ -1,0 +1,226 @@
+/* SUPPORT REQUEST TABLE */
+.ipsTable.cNexusSupportTable .cNexusSupportTable_icon {
+	width: 10px;
+	padding-right: 0;
+	vertical-align: top;
+}
+
+.ipsTable.cNexusSupportTable .cNexusSupportTable_customer,
+.ipsTable.cNexusSupportTable .cNexusSupportTable_lastReply {
+	width: 175px;
+}
+
+.ipsTable.cNexusSupportTable .cNexusSupportTable_status {
+	width: 100px;
+}
+
+.cNexusSupportTable td {
+	padding: 10px;
+}
+
+.ipsTable.cNexusSupportTable thead th {
+	font-weight: bold;
+}
+
+/* Badges */
+.cNexusSupportBadge {
+	display: inline-block;
+	padding: 0 10px;
+	border-radius: 4px;
+	vertical-align: middle;
+	font-size: 11px;
+	line-height: 20px;
+	font-weight: 500;
+	background: #C04848;
+	color: #fff;
+}
+
+/* Support form */
+.cNexusSupportForm select {
+	height: 26px !important;
+	font-size: 11px !important;
+	min-width: 100px;
+	padding: 3px 30px 4px 7px !important;
+}
+
+.cNexusSupportForm .ipsTabs_contained {
+	border-width: 4px;
+	border-color: #d6d6d6;
+}
+
+/* Reset some tab styles specifically for the ticket view page */
+.cNexusSupportForm .ipsTabs_panels.ipsTabs_contained .ipsTabs_panel,
+.cNexusSupportRequest_metaInfo .ipsTabs_small {
+	padding: 0;
+}
+
+.ipsApp_admin .cNexusSupportForm .ipsTabs_item,
+.ipsApp_admin .cNexusSupportRequest_metaInfo .ipsTabs_item,
+.cNexusSupportRequest_metaInfo .ipsTabs_panels.ipsTabs_contained {
+	border: 0 !important;
+}
+
+.cNexusSupportForm_message .ipsComposeArea_editor {
+	padding: 0 !important;
+}
+
+/* Special classes for the note reply form */
+.cNexusSupportForm_note .ipsTabs {
+	background: #ecdcb9;
+}
+
+.cNexusSupportForm_note .ipsTabs_contained {
+	border-color: #ecdcb9;
+}
+
+.cNexusSupportForm_note .ipsAreaBackground,
+.cNexusSupportForm_note {
+	background: #f6f0e4;
+}
+
+.cNexusSupportForm_note .ipsType_minorHeading,
+.cNexusSupportForm_note .ipsTabs_item {
+	color: #977b3e;
+}
+
+.cNexusSupportForm_sendTo {
+	border-bottom: 1px solid #ebebeb;
+	padding-left: 10px;
+}
+
+.cNexusSupportForm_sendTo .ipsForm > li {
+	margin-bottom: 0;
+}
+
+.cNexusSupportForm_sendTo .ipsForm_horizontal .ipsFieldRow > .ipsFieldRow_title {
+	width: 100px;
+}
+
+html[dir="ltr"] .cNexusSupportForm_sendTo .ipsForm_horizontal .ipsFieldRow:not( .ipsFieldRow_checkbox ) .ipsFieldRow_content {
+	margin-left: 100px;
+}
+html[dir="rtl"] .cNexusSupportForm_sendTo .ipsForm_horizontal .ipsFieldRow:not( .ipsFieldRow_checkbox ) .ipsFieldRow_content {
+	margin-right: 100px;
+}
+
+
+/* SUPPORT MESSAGES */
+.cNexusSupportRequest_title {
+	font-size: 24px;
+	font-weight: 500;
+}
+
+.cNexusAdminSupportMessage {
+	border-left: 7px solid transparent;
+}
+
+.cNexusAdminSupportMessage_author {
+	margin: 7px 15px 0 15px;
+	padding-bottom: 7px;
+	border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+	
+	.cNexusAdminSupportMessage_author .ipsType_light {
+		/*color: rgba(255,255,255,0.5);*/
+	}
+
+.cNexusAdminSupportMessage_m,
+.cNexusAdminSupportMessage_a {
+	border-color: #ccd9e4;
+	border-left-color: #437cab;
+}
+
+	.cNexusAdminSupportMessage_m .cNexusAdminSupportMessage_authorName,
+	.cNexusAdminSupportMessage_a .cNexusAdminSupportMessage_authorName {
+		color: #437cab;
+	}
+
+.cNexusAdminSupportMessage_s {
+	border-color: #d4e8d6;
+	border-left-color: #528758;
+}
+	
+	.cNexusAdminSupportMessage_s .cNexusAdminSupportMessage_authorName {
+		color: #528758;
+	}
+
+.cNexusAdminSupportMessage_e {
+	border-left-color: #b4b4b4;
+}
+	
+	.cNexusAdminSupportMessage_e .cNexusAdminSupportMessage_authorName {
+		color: #b4b4b4;
+	}
+
+.cNexusAdminSupportMessage_h, .cNexusAdminSupportMessage_p {
+	border-color: #e0d3c6;
+	border-left-color: #ce7d2d;
+}
+	
+	.cNexusAdminSupportMessage_h .cNexusAdminSupportMessage_authorName, .cNexusAdminSupportMessage_p .cNexusAdminSupportMessage_authorName {
+		color: #ce7d2d;
+	}
+	
+	.cNexusAdminSupportMessage_actions {
+		padding: 15px 15px 15px 45px;
+		border-radius: 2px;
+		position: relative;
+		background: #ede6e0;
+		color: #564a3f;
+		text-align: center;
+	}
+
+
+.cNexusSupportRequest_action {
+	padding-left: 22px; /* border on messages + standard padding */
+}
+
+	.cNexusSupportRequest_action .cNexusAdminSupportMessage_date {
+		margin-left: 15px;
+	}
+
+.cNexusSupportForm_to.ipsType_normal {
+	line-height: 24px;
+}
+
+.cNexusSupportForm_customAction select {
+	max-width: 100px;
+}
+
+/* Associated package overrides */
+html[dir="ltr"] .cNexusSupportRequest_associated .ipsTree_controls {
+	width: auto;
+	padding: 0;
+}
+
+.cNexusSupportRequest_associated .ipsTree_row > div {
+	display: block;
+}
+
+.cNexusSupportRequest_associated .ipsTree_row > .ipsTree_rowData {
+	margin: 15px 0;
+	padding: 0;
+}
+
+	.cNexusSupportRequest_associated .ipsTree_row > .ipsTree_rowData i.fa {
+		display: none;
+	}
+
+.cNexusSupportRequest_associated .ipsControlStrip {
+	width: 100%;
+	display: table;
+	float: none;
+}
+
+	.cNexusSupportRequest_associated .ipsControlStrip li {
+		float: none;
+		display: table-cell;
+	}
+
+		.cNexusSupportRequest_associated .ipsControlStrip li.ipsControlStrip_dropdown {
+			width: 40px;
+		}
+
+			.cNexusSupportRequest_associated .ipsControlStrip a {
+				width: auto;
+			}

@@ -1,0 +1,17 @@
+.ipsEmbedded .cDownloadsTrimmedImage {
+	background-color: #333;
+	background-size: cover;
+	background-position: 50%;
+	background-repeat: no-repeat;
+	overflow: hidden;
+}
+
+	.ipsEmbedded .cDownloadsTrimmedImage img {
+		display: none;
+	}
+
+	.ipsEmbedded .cDownloadsTrimmedImage a {
+		width: 120px;
+		height: 120px;
+		display: block;
+	}

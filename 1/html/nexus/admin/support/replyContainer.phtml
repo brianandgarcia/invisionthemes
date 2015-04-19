@@ -1,0 +1,63 @@
+<ips:template parameters="$item, $comment" />
+<div class="cNexusAdminSupportMessage cNexusAdminSupportMessage_{$comment->type} ipsBox ipsSpacer_bottom">
+	<div class='cNexusAdminSupportMessage_author ipsFaded_withHover ipsType_normal'>
+		{{if \IPS\Member::loggedIn()->hasAcpRestriction( 'nexus', 'support', 'requests_merge' )}}
+			<a href="{url="app=nexus&module=support&controller=request&do=deleteReply&id={$comment->id}"}" data-confirm data-ipsTooltip title='{lang="delete"}' class='ipsFaded ipsFaded_more ipsType_blendLinks ipsPos_right ipsType_normal'><i class='fa fa-times'></i></a>
+		{{endif}}
+		<div class='ipsType_large ipsType_reset ipsType_blendLinks'>
+			<strong>
+				{{if $comment->type === $comment::REPLY_EMAIL}}
+					<span class='cNexusAdminSupportMessage_authorName'>{$comment->email}</span>
+				{{elseif $comment->type === $comment::REPLY_MEMBER or $comment->type === $comment::REPLY_ALTCONTACT}}
+					<span class='cNexusAdminSupportMessage_authorName'><a href="{$comment->author()->acpUrl()}">{$comment->author()->cm_name}</a></span>
+				{{else}}
+					<span class='cNexusAdminSupportMessage_authorName'>{$comment->author()->cm_name}</span>
+				{{endif}}
+				{{if $comment->type == $comment::REPLY_HIDDEN}}
+					{lang="request_added_note"}
+				{{else}}
+					{lang="request_replied"}
+				{{endif}}
+			</strong>
+			&nbsp;&nbsp;<span class='ipsType_light ipsType_medium cNexusAdminSupportMessage_date'>{datetime="$comment->date"}</span>
+			<ul class='ipsList_reset ipsType_medium cNexusAdminSupportMessage_cc'>
+				{{if $comment->cc}}
+					<li><strong>{lang="cc"}:</strong> {$comment->cc}</li>
+				{{endif}}
+				{{if $comment->bcc}}
+					<li><strong>{lang="bcc"}:</strong> {$comment->cc}</li>
+				{{endif}}
+			</ul>
+		</div>
+	</div>
+	<div class='ipsPad'>
+		<div class='ipsType_richText ipsType_normal cNexusAdminSupportMessage_message' data-controller="nexus.admin.support.message">
+			{$comment->content()|raw}
+		</div>
+		{{if $comment->type === $comment::REPLY_STAFF and settings.nexus_support_satisfaction and \IPS\Member::loggedIn()->hasAcpRestriction( 'nexus', 'support', 'requests_ratings' )}}
+			<div class="ipsType_right ipsType_medium">
+				{{if $comment->ratingData['rating_rating']}}
+					{{if $comment->ratingData['rating_note'] and \IPS\Member::loggedIn()->hasAcpRestriction( 'nexus', 'support', 'requests_ratings_feedback' )}}
+						<a href="{url="app=nexus&module=support&controller=request&do=feedback&id={$comment->id}"}" data-ipsDialog>{lang="customer_rating"}</a>
+					{{else}}
+						{lang="customer_rating"}
+					{{endif}}
+					<ul class='ipsList_inline ipsClearfix ipsRating'>
+						{{foreach range( 1, 5 ) as $i}}
+							<li class='{{if $comment->ratingData['rating_rating'] and $comment->ratingData['rating_rating'] >= $i}}ipsRating_on{{endif}}'><i class='fa fa-star'></i></li>
+						{{endforeach}}
+					</ul>
+				{{else}}
+					<span class="ipsType_light">{lang="customer_has_not_rated"}</span>
+				{{endif}}
+			</div>
+		{{endif}}
+	</div>
+	{{if $comment->type === $comment::REPLY_PENDING}}
+		<div class="cNexusAdminSupportMessage_actions">
+			{lang="support_pending"}<br><br>
+			<a href="{$item->acpUrl()->setQueryString( array( 'response' => $comment->id, 'do' => 'pending', 'send' => 1, 'filter' => \IPS\Request::i()->filter, 'sort' => \IPS\Request::i()->sort ) )}" class="ipsButton ipsButton_normal ipsButton_small">{lang="send_it"}</a>
+			<a href="{$item->acpUrl()->setQueryString( array( 'response' => $comment->id, 'do' => 'pending', 'send' => 0, 'filter' => \IPS\Request::i()->filter, 'sort' => \IPS\Request::i()->sort ) )}" class="ipsButton ipsButton_normal ipsButton_small">{lang="discard_it"}</a>
+		</div>	
+	{{endif}}
+</div>

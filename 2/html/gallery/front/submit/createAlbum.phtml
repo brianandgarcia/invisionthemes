@@ -1,0 +1,11 @@
+<ips:template parameters="$form, $totalItems" />
+
+<div class='ipsPad'>
+	{{if \IPS\Member::loggedIn()->group['g_img_album_limit'] && $totalItems > \IPS\Member::loggedIn()->group['g_img_album_limit']}}
+		<div class='ipsMessage ipsMessage_info ipsSpacer_bottom'>
+			<h4 class='ipsMessage_title'>{lang="too_many_images"}</h4>
+			{lang="album_limit_message" pluralize="\IPS\Member::loggedIn()->group['g_img_album_limit']" sprintf="$totalItems"}
+		</div>
+	{{endif}}
+	{$form|raw}
+</div>

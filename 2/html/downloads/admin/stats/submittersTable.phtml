@@ -1,0 +1,27 @@
+<ips:template parameters="$select, $pagination" />
+
+{{if trim( $pagination )}}
+	{$pagination|raw}
+	<br><br>
+{{endif}}
+
+<table class="ipsTable ipsTable_zebra">
+	<thead>
+		<tr>
+			<th>{lang="member"}</th>
+			<th>{lang="files"}</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{foreach $select as $row}}
+			{{$member = \IPS\Member::constructFromData( $row );}}
+			<tr>
+				<td>{template="userPhoto" app="core" group="global" params="$member"} {$member->link()|raw}</td>
+				<td><a href='{$member->url()->setQueryString( array( 'do' => 'content', 'type' => 'downloads_file' ) )}' target='_blank'>{$row['files']}</a></td>
+			</tr>
+		{{endforeach}}
+	</tbody>
+</table>
+<br>
+
+{$pagination|raw}

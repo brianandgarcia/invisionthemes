@@ -1,0 +1,59 @@
+<ips:template parameters="$file" />
+
+<div class='ipsAreaBackground_light ipsPad'>
+	<div class='ipsDataItem'>
+		<div class='ipsDataItem_generic ipsDataItem_size3 ipsPos_top'>
+			{template="thumbImage" group="global" app="core" location="front" params="$file->primary_screenshot_thumb, $file->name, 'medium', '', 'view_this', $file->url()"}
+		</div>
+		<div class='ipsDataItem_main'>
+			<h4 class='ipsDataItem_title ipsType_sectionHead'>
+				{{if $file->prefix()}}
+					{template="prefix" group="global" app="core" location="front" params="$file->prefix( TRUE ), $file->prefix()"}
+				{{endif}}
+				<a href='{$file->url()}' title='{lang="view_this_file" sprintf="$file->name"}'>{wordbreak="$file->name"}</a>
+			</h4>
+			<p class='ipsType_reset ipsType_light ipsType_blendLinks'>
+				{lang="byline_nodate" htmlsprintf="$file->author()->link()"}
+				{{if \IPS\Request::i()->app != 'downloads'}}
+					{lang="in"} <a href="{$file->container()->url()}">{$file->container()->_title}</a>
+				{{endif}}
+			</p>
+			<div class='ipsType_medium ipsType_richText ipsType_break ipsSpacer_top' data-ipsTruncate data-ipsTruncate-type="remove" data-ipsTruncate-size="2 lines">
+				{$file->truncated()|raw}
+			</div>
+		</div>
+		<div class='ipsDataItem_generic ipsDataItem_size8'>
+			{{if $file->container()->bitoptions['reviews']}}
+				<ul class='ipsList_inline ipsClearfix ipsRating ipsRating_large'>
+					{{foreach range( 1, 5 ) as $i}}
+						<li class='{{if $file->rating >= $i}}ipsRating_on{{else}}ipsRating_off{{endif}}'>
+							<i class='fa fa-star'></i>
+						</li>
+					{{endforeach}}
+				</ul>
+				&nbsp;&nbsp;
+				<span class='ipsType_normal'>
+					{{if $file->reviews}}
+						<a href='{$file->url()->setQueryString( 'tab', 'reviews' )->setFragment('replies')}'>
+					{{endif}}
+					{lang="num_reviews" pluralize="$file->reviews"}
+					{{if $file->reviews}}
+						</a>
+					{{endif}}
+				</span>
+			{{endif}}
+			{{if $file->container()->bitoptions['comments']}}
+				<p class='ipsType_normal'>
+					{{if $file->comments}}
+						<a href='{$file->url()->setQueryString( 'tab', 'comments' )->setFragment('replies')}'>
+					{{endif}}
+					<i class='fa fa-comment'></i> {lang="num_comments" pluralize="$file->comments"}
+					{{if $file->comments}}
+						</a>
+					{{endif}}
+				</p>
+			{{endif}}
+			<p class='ipsType_medium'><strong>{{if $file->updated == $file->submitted}}{lang="submitted"} {datetime="$file->submitted"}{{else}}{lang="updated"} {datetime="$file->updated"}{{endif}}</strong></p>
+		</div>
+	</div>
+</div>

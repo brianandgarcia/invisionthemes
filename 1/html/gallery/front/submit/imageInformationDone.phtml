@@ -1,0 +1,7 @@
+<ips:template parameters="$images=array(), $movies=array(), $category, $album=NULL" />
+
+<div class='cGallerySubmit_finished ipsType_center'>
+	<h3 class='ipsType_large'>{lang="ready_to_submit"}</h3>
+	<br>
+	<a href='{url="app=gallery&module=gallery&controller=submit&do=submit&category={$category->_id}&_step=image_information&finish=1" seoTemplate="gallery_submit"}' class='ipsButton ipsButton_important ipsButton_large' data-action='finish'><i class='fa fa-check'></i> {lang="finish_all_images"}</a>
+</div>

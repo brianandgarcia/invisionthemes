@@ -1,0 +1,20 @@
+<ips:template parameters="$form, $currentItem, $itemCount, $currentIndex, $category, $currentType" />
+<div class='ipsColumn ipsColumn_wide'>
+	<div class='ipsPad ipsBox'>
+		{{if $currentItem->url && $currentType == 'images'}}
+			<img src='{$currentItem->url}' class='ipsImage' alt=''>
+		{{else}}
+			{{if $currentItem->attachmentThumbnailUrl}}
+				<img src='{$currentItem->attachmentThumbnailUrl}' class='ipsImage' alt=''>
+			{{else}}	
+				<div class='ipsNoThumb ipsNoThumb_video'></div>
+			{{endif}}
+		{{endif}}
+	</div>
+</div>
+<div class='ipsColumn ipsColumn_fluid cGallerySubmit_info'>
+	<div class='ipsBox ipsPad'>
+		<h3 class='ipsType_sectionHead ipsSpacer_bottom'>{{if $currentType == 'images'}}{lang="editing_image"}{{else}}{lang="editing_movie"}{{endif}} <span class='ipsType_light'>({lang="x_of_y" sprintf="$currentIndex + 1, $itemCount"})</h3>
+		{$form|raw}
+	</div>
+</div>
